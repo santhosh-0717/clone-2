@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Video Clone</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Navigation Bar -->
+        <nav id="navbar" class="hidden">
+            <div class="nav-left">
+                <a href="#" class="logo">
+                    <img src="https://m.media-amazon.com/images/G/01/digital/video/avod/AV_Logo_150._CB430404026_.png"
+                        alt="Prime Video" style="height: 24px;">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="store">Store</a></li>
+                    <li><a href="#" class="nav-link" data-page="movies">Movies</a></li>
+                    <li><a href="#" class="nav-link" data-page="tv">TV Shows</a></li>
+                    <li><a href="#" class="nav-link" data-page="live">Live TV</a></li>
+                    <li><a href="#" class="nav-link" data-page="categories">Categories</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search">
+                </div>
+                <div class="user-menu">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="usernameDisplay">User</span>
+                    <div class="dropdown">
+                        <a href="#" id="logoutBtn">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Dynamic Content will be injected here -->
+        </main>
+
+        <!-- Video Player Overlay -->
+        <div id="video-player" class="hidden">
+            <div class="player-header">
+                <button id="closePlayer"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="video-container">
+                <div class="placeholder-video">
+                    <i class="fas fa-play-circle play-icon"></i>
+                    <h2 id="playerTitle">Movie Title</h2>
+                    <p>Playing Simulation...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page Template (Hidden by default, used by JS) -->
+    <template id="login-template">
+        <div class="login-container">
+            <div class="login-box">
+                <img src="https://m.media-amazon.com/images/G/01/digital/video/avod/AV_Logo_150._CB430404026_.png"
+                    alt="Prime Video" class="login-logo">
+                <h1>Sign in</h1>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="email">Email or mobile phone number</label>
+                        <input type="text" id="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In</button>
+                </form>
+                <div class="divider">
+                    <h5>New to Amazon?</h5>
+                </div>
+                <button class="create-account-btn">Create your Amazon account</button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Store Page Template -->
+    <template id="store-template">
+        <div class="section-header">
+            <h1>Store</h1>
+        </div>
+        <div class="content-rows" id="section-rows">
+            <h3 class="row-title" style="margin-top: 40px;">New Releases</h3>
+            <div class="card-row-wrapper">
+                <div class="card-container">
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/_879X68fBL4?si=8mYNowR7MZ60GPmZ', 'New Release 1')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/u3V5KDHRQvk?si=qbM0QoYw6dQS7Ft7', 'New Release 2')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/OCK9wwkHeg8?si=yeBVJ6XgBovCwKaS', 'New Release 3')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Avenger Team')"
+                        class="movie-card"><img src="ave.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Sci-Fi Thriller')"
+                        class="movie-card"><img src="1.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/UrHkqs-BrcQ?si=uMo82DCGfFr2pPZs', 'The Ascent')"
+                        class="movie-card"><img src="2.png" alt="Poster"></a>
+                </div>
+            </div>
+            <!-- Grid injected here -->
+        </div>
+    </template>
+
+    <!-- Movies Page Template -->
+    <template id="movies-template">
+        <div class="section-header">
+            <h1>Movies</h1>
+        </div>
+        <div class="content-rows" id="section-rows">
+            <h3 class="row-title" style="margin-top: 40px;">New Releases</h3>
+            <div class="card-row-wrapper">
+                <div class="card-container">
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/_879X68fBL4?si=8mYNowR7MZ60GPmZ', 'New Release 1')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/u3V5KDHRQvk?si=qbM0QoYw6dQS7Ft7', 'New Release 2')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/OCK9wwkHeg8?si=yeBVJ6XgBovCwKaS', 'New Release 3')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Avenger Team')"
+                        class="movie-card"><img src="ave.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Sci-Fi Thriller')"
+                        class="movie-card"><img src="1.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/UrHkqs-BrcQ?si=uMo82DCGfFr2pPZs', 'The Ascent')"
+                        class="movie-card"><img src="2.png" alt="Poster"></a>
+                </div>
+            </div>
+            <!-- Grid injected here -->
+        </div>
+    </template>
+
+    <!-- Live TV Template -->
+    <template id="live-template">
+        <div class="section-header">
+            <h1>Live TV</h1>
+        </div>
+        <div class="content-rows" id="section-rows">
+            <h3 class="row-title" style="margin-top: 40px;">New Releases</h3>
+            <div class="card-row-wrapper">
+                <div class="card-container">
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/_879X68fBL4?si=8mYNowR7MZ60GPmZ', 'New Release 1')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/u3V5KDHRQvk?si=qbM0QoYw6dQS7Ft7', 'New Release 2')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/OCK9wwkHeg8?si=yeBVJ6XgBovCwKaS', 'New Release 3')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Avenger Team')"
+                        class="movie-card"><img src="ave.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Sci-Fi Thriller')"
+                        class="movie-card"><img src="1.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/UrHkqs-BrcQ?si=uMo82DCGfFr2pPZs', 'The Ascent')"
+                        class="movie-card"><img src="2.png" alt="Poster"></a>
+                </div>
+            </div>
+            <!-- Grid injected here -->
+        </div>
+    </template>
+
+    <!-- Categories Template -->
+    <template id="categories-template">
+        <div class="section-header">
+            <h1>Categories</h1>
+        </div>
+        <div class="content-rows" id="section-rows">
+            <!-- Grid injected here -->
+        </div>
+    </template>
+
+
+    <!-- TV Page Template -->
+    <template id="tv-template">
+        <div class="section-header">
+            <h1>TV Shows</h1>
+        </div>
+        <div class="content-rows" id="section-rows">
+            <h3 class="row-title" style="margin-top: 40px;">New Releases</h3>
+            <div class="card-row-wrapper">
+                <div class="card-container">
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/_879X68fBL4?si=8mYNowR7MZ60GPmZ', 'New Release 1')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/u3V5KDHRQvk?si=qbM0QoYw6dQS7Ft7', 'New Release 2')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/OCK9wwkHeg8?si=yeBVJ6XgBovCwKaS', 'New Release 3')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Avenger Team')"
+                        class="movie-card"><img src="ave.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Sci-Fi Thriller')"
+                        class="movie-card"><img src="1.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/UrHkqs-BrcQ?si=uMo82DCGfFr2pPZs', 'The Ascent')"
+                        class="movie-card"><img src="2.png" alt="Poster"></a>
+                </div>
+            </div>
+            <!-- Grid injected here -->
+        </div>
+    </template>
+
+    <!-- Home Page Template -->
+    <template id="home-template">
+        <div class="hero-section">
+            <div class="hero-video-container">
+                <video id="heroVideo" autoplay muted loop playsinline class="hero-video">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 id="heroTitle">Featured Title</h1>
+                <p id="heroDesc">Description of the featured movie goes here.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary play-hero"><i class="fas fa-play"></i> Play</button>
+                    <button class="btn-secondary"><i class="fas fa-plus"></i> Watchlist</button>
+                </div>
+            </div>
+        </div>
+        <div class="content-rows" id="rows-container">
+            <h3 class="row-title" style="margin-top: 40px;">New Releases</h3>
+            <div class="card-row-wrapper">
+                <div class="card-container">
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/_879X68fBL4?si=8mYNowR7MZ60GPmZ', 'New Release 1')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/u3V5KDHRQvk?si=qbM0QoYw6dQS7Ft7', 'New Release 2')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/OCK9wwkHeg8?si=yeBVJ6XgBovCwKaS', 'New Release 3')"
+                        class="movie-card"><img src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+                            alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Avenger Team')"
+                        class="movie-card"><img src="ave.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/8gcRTMr-rlg?si=8kf6qV4OIIpLav7V', 'Sci-Fi Thriller')"
+                        class="movie-card"><img src="1.png" alt="Poster"></a>
+                    <a href="#"
+                        onclick="return playYouTube('https://youtu.be/UrHkqs-BrcQ?si=uMo82DCGfFr2pPZs', 'The Ascent')"
+                        class="movie-card"><img src="2.png" alt="Poster"></a>
+                </div>
+            </div>
+            <!-- Rows injected by JS -->
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
